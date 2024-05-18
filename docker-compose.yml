@@ -1,15 +1,16 @@
 version: "3.4"
 services:
   mediamtx:
-    image: bluenviron/mediamtx:1.4.0@sha256:8611ad6c3343d4b9f0329d63edf00ed62766ba2bec2701ee5f3fcb04365ad428
+    image: bluenviron/mediamtx:latest-ffmpeg
     container_name: mediamtx
     restart: unless-stopped
+    privileged: true
     environment:
       - MTX_API=yes
       - MTX_APIADDRESS=:9997
       - MTX_RECORD=yes
     volumes:
-      - ${MEDIAMTX_RECORDINGS_DIR}:/recordings
+      - ./recordings:/recordings
     networks:
       - mtx
     ports:
@@ -29,7 +30,7 @@ services:
     networks:
       - mtx
     volumes:
-      - ${MEDIAMTX_RECORDINGS_DIR}:/recordings
+      - ./recordings:/recordings
     ports:
       - 3000:3000
   demo-streams:
